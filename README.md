@@ -11,17 +11,6 @@ This library was built to provide the following features:
 * Provides a capability to send a message to a websocket data channel on connection.
 * Automatically reconnects after a customizable delay.
 
-## Contents
-- [Configurable flume.conf Source Properties](#configurable-flumeconf-source-properties)
-    + [Configuration Additional Notes](#configuration-additional-notes-)
-- [Examples](#examples)
-  * [Connecting to Coinbase Websocket API](#connecting-to-coinbase-websocket-api)
-- [Building and Installing](#building-and-installing)
-  * [Building the Project](#building-the-project)
-  * [Installing third-party libraries for Apache Flume](#installing-third-party-libraries-for-apache-flume)
-    + [Creating the custom plugin directory](#creating-the-custom-plugin-directory)
-
-
 # Configurable flume.conf Source Properties
 | Property      | Required | Default | Description |
 |---------------|----------|---------|-------------|
