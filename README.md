@@ -40,8 +40,8 @@ This library was built to provide the following features:
 ```
 # Example flume.conf using Websocket source
 
-a1.sources  = b1
-a1.sinks    = k1
+a1.sources  = w1
+a1.sinks    = l1
 a1.channels = c1
 
 # CHANNELS 
@@ -50,26 +50,19 @@ a1.channels.c1.capacity            = 1000
 a1.channels.c1.transactionCapacity = 100
 
 # SOURCES
-a1.sources.b1.type         = com.deniscoady.flume.websocket.WebSocketSource
-a1.sources.b1.endpoint     = wss://ws-feed.pro.coinbase.com
-a1.sources.b1.retryDelay   = 5
-a1.sources.b1.initMessage  = {"type": "subscribe", "product_ids": ["BTC-USD"], "channels": ["level2"]}
-a1.sources.b1.channels     = c1
-a1.sources.b1.sslEnabled    = true
-a1.sources.b1.trustAllCerts = true
-a1.sources.b1.keyStorePath  = conf/keystore.jks
-a1.sources.b1.keyStorePass  = changeit
+a1.sources.w1.type         = com.deniscoady.flume.websocket.WebSocketSource
+a1.sources.w1.endpoint     = wss://ws-feed.pro.coinbase.com
+a1.sources.w1.retryDelay   = 5
+a1.sources.w1.initMessage  = {"type": "subscribe", "product_ids": ["BTC-USD"], "channels": ["level2"]}
+a1.sources.w1.channels     = c1
+a1.sources.w1.sslEnabled    = true
+a1.sources.w1.trustAllCerts = true
+a1.sources.w1.keyStorePath  = conf/keystore.jks
+a1.sources.w1.keyStorePass  = changeit
 
 # SINKS
-//a1.sinks.e1.type    = logger
-//a1.sinks.e1.channel = c1
-
-a1.sinks.k1.type       = org.apache.flume.sink.kafka.KafkaSink
-a1.sinks.k1.topic      = coinbase
-a1.sinks.k1.brokerList = localhost:9092
-a1.sinks.k1.channel    = c1
-a1.sinks.k1.batchSize  = 1
-a1.sinks.k1.serializer.class = kafka.serializer.DefaultEncoder
+a1.sinks.l1.type    = logger
+a1.sinks.l1.channel = c1
 ```
 
 # Building and Installing
