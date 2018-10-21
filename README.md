@@ -31,7 +31,7 @@ This library was built to provide the following features:
 | keyStorePass  | no<sup>2</sup>      | changeit | Password to open and read Java KeyStore |
 | initMessage | no |  | After a successful connection, the websocket client will send this message to the remote endpoint. Typically this is used for authentication or subscribing to a message channel. |
 
-### Configuration Additional Notes:
+### Configuration Additional Notes
 <sup>1</sup> sslEnabled must be set to true for `wss://` protocol usage.
 
 <sup>2</sup> keyStore* properties must be configured if sslEnabled = true and trustAllCerts = false
