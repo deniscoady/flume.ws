@@ -24,8 +24,8 @@ This library was built to provide the following features:
 | retryDelay    | no       | 30      | On an unexpected websocket closure, determine how quickly the client should poll attempting to reestablish connection. Duration is in seconds. |
 | trustAllCerts | no       | false   | Determine if client should trust ALL TLS certificate authorities including self-signed certificates. If enabled there is a risk of a man-in-the-middle attack and should be used for development purposed only. |
 | keyStoreType  | no<sup>2</sup>      | JKS     | Java KeyStore type used to hold trusted certificates. List of valid values can be found for Java 8 at: [Java Cryptography Architecture Standard Algorithm Name Documentation for JDK 8#KeyStore](https://docs.oracle.com/javase/8/docs/technotes/guides/security/StandardNames.html#KeyStore) |
-| keyStorePath  | no<sup>2</sup>      | keystore.jks | Filesystem location of Java KeyStore |
-| keyStorePass  | no<sup>2</sup>      | changeit | Password to open and read Java KeyStore |
+| keyStorePath  | no<sup>2</sup>      |  | Filesystem location of Java KeyStore |
+| keyStorePass  | no<sup>2</sup>      |  | Password to open and read Java KeyStore |
 | initMessage | no |  | After a successful connection, the websocket client will send this message to the remote endpoint. Typically this is used for authentication or subscribing to a message channel. |
 
 ### Configuration Additional Notes
