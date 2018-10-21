@@ -11,7 +11,38 @@ This library was built to provide the following features:
 * Provides a capability to send a message to a websocket data channel on connection.
 * Automatically reconnects after a customizable delay.
 
-# Configurable Properties
+
+# Building and Installing
+This project uses Apache Maven to build so simply running `mvn package` should be enough to get a library jar. Before this source library can be found by Apache Flume it must be added to the Flume plugins directory. 
+
+**NOTE:** The latest instructions on this can be found here: https://flume.apache.org/FlumeUserGuide.html#installing-third-party-plugins.
+
+## Installing third-party libraries for Apache Flume
+Flume has a fully plugin-based architecture. While Flume ships with many out-of-the-box sources, channels, sinks, serializers, and the like, many implementations exist which ship separately from Flume.
+
+While it has always been possible to include custom Flume components by adding their jars to the FLUME_CLASSPATH variable in the flume-env.sh file, Flume now supports a special directory called plugins.d which automatically picks up plugins that are packaged in a specific format. This allows for easier management of plugin packaging issues as well as simpler debugging and troubleshooting of several classes of issues, especially library dependency conflicts.
+
+The plugins.d directory is located at `$FLUME_HOME/plugins.d`. At startup time, the flume-ng start script looks in the plugins.d directory for plugins that conform to the below format and includes them in proper paths when starting up java. 
+
+**NOTE:** The plugin directory can also be defined when executing the flume-ng command with the `--plugins-path` parameter.
+
+### Creating the custom plugin directory
+Each plugin (subdirectory) within plugins.d can have up to three sub-directories:
+
+* lib - the plugin’s jar(s)
+* libext - the plugin’s dependency jar(s)
+* native - any required native libraries, such as .so files
+
+Example of the websocket plugin within the plugins.d directory:
+
+```
+plugins.d/
+plugins.d/flume-websocket-source/
+plugins.d/flume-websocket-source/lib/websocket-1.0.jar
+plugins.d/flume-websocket-source/libext/spring-core-2.5.6.jar
+```
+
+# Configurable flume.conf Source Properties
 | Property      | Required | Default | Description |
 |---------------|----------|---------|-------------|
 | **endpoint**  | yes      |         | URL endpoint for websocket to establish connection. |
