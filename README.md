@@ -13,6 +13,21 @@ This library was built to provide the following features:
 
 
 # Building and Installing
+
+## TL;DC;DwtR (Too Long; Don't Care; Don't want to Read)
+1. Build project and plugin directory for Apache Flume with `sh build.sh`
+2. Create a `flume.conf` file
+3. Run flume agent: 
+```
+CONFIGS_DIRECTORY=$(pwd)/conf
+flume-ng agent                                    \
+    --conf          $CONFIGS_DIRECTORY            \
+    --conf-file     $CONFIGS_DIRECTORY/flume.conf \
+    --plugins-path  $PLUGINS_DIRECTORY            \
+    --name a1
+```
+
+## Building the Project
 This project uses Apache Maven to build so simply running `mvn package` should be enough to get a library jar. Before this source library can be found by Apache Flume it must be added to the Flume plugins directory. 
 
 **NOTE:** The latest instructions on this can be found here: https://flume.apache.org/FlumeUserGuide.html#installing-third-party-plugins.
@@ -41,10 +56,6 @@ plugins.d/flume-websocket-source/
 plugins.d/flume-websocket-source/lib/websocket-1.0.jar
 plugins.d/flume-websocket-source/libext/dependency.jar
 ```
-
-### Provided installation script
-To make life easier I've provided a simple script (`build.sh`) to build the plugin directory for you.
-
 
 # Configurable flume.conf Source Properties
 | Property      | Required | Default | Description |
