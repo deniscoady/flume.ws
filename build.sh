@@ -59,17 +59,17 @@
 
 PLUGINS_DIRECTORY=$(pwd)/plugins.d
 CONFIGS_DIRECTORY=$(pwd)/conf
-PROJECT_DIRECTORY=$(pwd)/..
+PROJECT_DIRECTORY=$(pwd)
 
 echo '[Building plugins.d directory]'
-echo   $PLUGINS_DIRECTORY
+mkdir  $PLUGINS_DIRECTORY
 mkdir  $PLUGINS_DIRECTORY/websocket/
 mkdir  $PLUGINS_DIRECTORY/websocket/lib
 mkdir  $PLUGINS_DIRECTORY/websocket/libext
 mkdir  $PLUGINS_DIRECTORY/websocket/native
 
 echo '[Building project]'
-mvn --file .. clean package dependency:copy-dependencies
+mvn --file $PROJECT_DIRECTORY clean package dependency:copy-dependencies
 
 echo '[Copying libraries to plugins.d]'
 cp    $PROJECT_DIRECTORY/target/dependency/* $PLUGINS_DIRECTORY/websocket/libext/
