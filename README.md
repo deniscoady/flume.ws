@@ -37,7 +37,7 @@ This library was built to provide the following features:
 # Examples
 
 ## Connecting to Coinbase Websocket API
-```
+```properties
 # Example flume.conf using Websocket source
 
 a1.sources  = w1
@@ -71,7 +71,7 @@ a1.sinks.l1.channel = c1
 1. Build project and plugin directory for Apache Flume with `sh build.sh`
 2. Create a `flume.conf` file
 3. Run flume agent: 
-```
+```bash
 export PLUGINS_DIRECTORY=$(pwd)/plugins.d
 export CONFIGS_DIRECTORY=$(pwd)/conf
 flume-ng agent                                    \
