@@ -7,9 +7,9 @@
 Hi there! I've mostly put this up to archive work which can possibly be reused by others. If something is broken or you'd like to see a feature, feel free to leave an issue and I'll take a look.
 
 ## Overview
-Apache Flume is a simple and effective framework for ingesting small messages in realtime which 
-makes a perfect receiver for websocket messages. Unfortunately at the time I couldn't find a library that 
-does everything I wanted so I built this one myself. Hopefully it will help others in their 
+> Flume is a distributed, reliable, and available service for efficiently collecting, aggregating, and moving large amounts of log data. It has a simple and flexible architecture based on streaming data flows. It is robust and fault tolerant with tunable reliability mechanisms and many failover and recovery mechanisms. It uses a simple extensible data model that allows for online analytic application. — http://flume.apache.com
+
+The capabilities of Flume make it a perfect receiver for websocket messages. Unfortunately at the time I couldn't find a plugin library that does everything I wanted so I built this one myself. Hopefully it will help others in their 
 pursuit to build cool things with less effort.
 
 This library was built to provide the following features:
