@@ -32,6 +32,31 @@ This library was built to provide the following features:
 
 # Examples
 
+## Get Single Echo Response from echo.websocket.org
+```properties
+# Example flume.conf using Websocket source
+
+a1.sources  = w1
+a1.sinks    = l1
+a1.channels = c1
+
+# CHANNELS 
+a1.channels.c1.type                = memory
+a1.channels.c1.capacity            = 1000
+a1.channels.c1.transactionCapacity = 100
+
+# SOURCES
+a1.sources.w1.type         = com.deniscoady.flume.websocket.WebSocketSource
+a1.sources.w1.endpoint     = ws://echo.websocket.org
+a1.sources.w1.retryDelay   = 5
+a1.sources.w1.initMessage  = hello world
+a1.sources.w1.channels     = c1
+
+# SINKS
+a1.sinks.l1.type    = logger
+a1.sinks.l1.channel = c1
+```
+
 ## Connecting to Coinbase Websocket API
 ```properties
 # Example flume.conf using Websocket source
