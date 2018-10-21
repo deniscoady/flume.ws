@@ -34,7 +34,7 @@ This library was built to provide the following features:
 ### Configuration Additional Notes
 <sup>1</sup> sslEnabled must be set to true for `wss://` protocol usage.
 
-<sup>2</sup> keyStore* properties must be configured if sslEnabled = true and trustAllCerts = false
+<sup>2</sup> keyStore* properties must be configured if sslEnabled = true
 
 
 # Examples
