@@ -72,6 +72,7 @@ a1.sinks.l1.channel = c1
 2. Create a `flume.conf` file
 3. Run flume agent: 
 ```
+PLUGINS_DIRECTORY=$(pwd)/plugins.d
 CONFIGS_DIRECTORY=$(pwd)/conf
 flume-ng agent                                    \
     --conf          $CONFIGS_DIRECTORY            \
