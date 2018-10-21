@@ -39,8 +39,12 @@ Example of the websocket plugin within the plugins.d directory:
 plugins.d/
 plugins.d/flume-websocket-source/
 plugins.d/flume-websocket-source/lib/websocket-1.0.jar
-plugins.d/flume-websocket-source/libext/spring-core-2.5.6.jar
+plugins.d/flume-websocket-source/libext/dependency.jar
 ```
+
+### Provided installation script
+To make life easier I've provided a simple script (`build.sh`) to build the plugin directory for you.
+
 
 # Configurable flume.conf Source Properties
 | Property      | Required | Default | Description |
