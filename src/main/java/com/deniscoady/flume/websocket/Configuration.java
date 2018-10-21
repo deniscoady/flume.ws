@@ -74,8 +74,8 @@ public class Configuration {
      * Required: no except if sslEnabled = true and trustAllCerts = false
      * Default : JKS
      *
-     * If the websocket client should not trust all certificates, then a Java KeyStore (JKS) should be created with
-     * the trusted certificates.
+     * Java KeyStore type used to hold trusted certificates. List of valid values can be found for Java 8 at:
+     * https://docs.oracle.com/javase/8/docs/technotes/guides/security/StandardNames.html#KeyStore
      */
     public final static String CONTEXT_KEY_KEYSTORE_TYPE = "keyStoreType";
 
@@ -85,8 +85,7 @@ public class Configuration {
      * Required: no except if sslEnabled = true and trustAllCerts = false
      * Default : keystore.jks
      *
-     * If the websocket client should not trust all certificates, then a Java KeyStore (JKS) should be created with
-     * the trusted certificates.
+     * Filesystem location of Java KeyStore
      */
     public final static String CONTEXT_KEY_KEYSTORE_PATH = "keyStorePath";
 
@@ -96,8 +95,7 @@ public class Configuration {
      * Required: no except if sslEnabled = true and trustAllCerts = false
      * Default : changeit
      *
-     * If the websocket client should not trust all certificates, then a Java KeyStore (JKS) should be created with
-     * the trusted certificates.
+     * Password to open and read Java KeyStore
      */
     public final static String CONTEXT_KEY_KEYSTORE_PASS = "keyStorePass";
 
