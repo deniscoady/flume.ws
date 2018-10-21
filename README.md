@@ -11,6 +11,7 @@ This library was built to provide the following features:
 * Provides a capability to send a message to a websocket data channel on connection.
 * Automatically reconnects after a customizable delay.
 
+## Contents
 - [Configurable flume.conf Source Properties](#configurable-flumeconf-source-properties)
     + [Configuration Additional Notes](#configuration-additional-notes-)
 - [Examples](#examples)
