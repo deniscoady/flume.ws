@@ -17,16 +17,16 @@ This library was built to provide the following features:
 * Automatically reconnects after a customizable delay.
 
 # Configurable flume.conf Source Properties
-| Property      | Required | Default | Description |
-|---------------|----------|---------|-------------|
-| **endpoint**  | yes      |         | URL endpoint for websocket to establish connection. |
-| sslEnabled    | no<sup>1</sup>       | false   | Configure if TLS/SSL encryption should be used on the socket. |
-| retryDelay    | no       | 30      | On an unexpected websocket closure, determine how quickly the client should poll attempting to reestablish connection. Duration is in seconds. |
-| trustAllCerts | no       | false   | Determine if client should trust ALL TLS certificate authorities including self-signed certificates. If enabled there is a risk of a man-in-the-middle attack and should be used for development purposed only. |
-| keyStoreType  | no      |      | Java KeyStore type used to hold trusted certificates. List of valid values can be found for Java 8 at: [Java Cryptography Architecture Standard Algorithm Name Documentation for JDK 8#KeyStore](https://docs.oracle.com/javase/8/docs/technotes/guides/security/StandardNames.html#KeyStore) |
-| keyStorePath  | no      |  | Filesystem location of Java KeyStore |
-| keyStorePass  | no      |  | Password to open and read Java KeyStore |
-| initMessage | no |  | After a successful connection, the websocket client will send this message to the remote endpoint. Typically this is used for authentication or subscribing to a message channel. |
+| Property      | Required | Default | Type | Description |
+|---------------|----------|---------|------|-------------|
+| **endpoint**  | yes      |         | string | URL endpoint for websocket to establish connection. |
+| sslEnabled    | no<sup>1</sup>       | false   | boolean | Configure if TLS/SSL encryption should be used on the socket. |
+| retryDelay    | no       | 30      | integer | On an unexpected websocket closure, determine how quickly the client should poll attempting to reestablish connection. Duration is in seconds. |
+| trustAllCerts | no       | false   | boolean | Determine if client should trust ALL TLS certificate authorities including self-signed certificates. If enabled there is a risk of a man-in-the-middle attack and should be used for development purposed only. |
+| keyStoreType  | no      |      | string | Java KeyStore type used to hold trusted certificates. List of valid values can be found for Java 8 at: [Java Cryptography Architecture Standard Algorithm Name Documentation for JDK 8#KeyStore](https://docs.oracle.com/javase/8/docs/technotes/guides/security/StandardNames.html#KeyStore) |
+| keyStorePath  | no      |  | string | Filesystem location of Java KeyStore |
+| keyStorePass  | no      |  | string | Password to open and read Java KeyStore |
+| initMessage | no |  | string | After a successful connection, the websocket client will send this message to the remote endpoint. Typically this is used for authentication or subscribing to a message channel. |
 
 <sup>1</sup> sslEnabled must be set to true for `wss://` protocol usage.
 
