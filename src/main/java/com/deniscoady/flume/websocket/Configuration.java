@@ -115,10 +115,12 @@ public class Configuration {
      *
      * CONTEXT_DEFAULT_* is the default value for the CONTEXT_KEY_* property.
      */
+    public final static String CONTEXT_DEFAULT_ENDPOINT_URI   = null;
+    public final static String CONTEXT_DEFAULT_INIT_MESSAGE   = null;
     public final static boolean CONTEXT_DEFAULT_SSL_ENABLED   = false;
-    public final static String CONTEXT_DEFAULT_KEYSTORE_TYPE  = "JKS";
-    public final static String CONTEXT_DEFAULT_KEYSTORE_PATH  = "keystore.jks";
-    public final static String CONTEXT_DEFAULT_KEYSTORE_PASS  = "changeit";
+    public final static String CONTEXT_DEFAULT_KEYSTORE_TYPE  = null;
+    public final static String CONTEXT_DEFAULT_KEYSTORE_PATH  = null;
+    public final static String CONTEXT_DEFAULT_KEYSTORE_PASS  = null;
     public final static boolean CONTEXT_DEFAULT_KEYSTORE_OPEN = false;
     public final static Integer CONTEXT_DEFAULT_RETRY_DELAY   = 30;
 
@@ -137,8 +139,8 @@ public class Configuration {
      * @param context Flume context
      */
     public Configuration(Context context) {
-        endpoint     = context.getString(CONTEXT_KEY_ENDPOINT_URI, null);
-        initMessage  = context.getString(CONTEXT_KEY_INIT_MESSAGE, null);
+        endpoint     = context.getString(CONTEXT_KEY_ENDPOINT_URI, CONTEXT_DEFAULT_ENDPOINT_URI);
+        initMessage  = context.getString(CONTEXT_KEY_INIT_MESSAGE, CONTEXT_DEFAULT_INIT_MESSAGE);
         retryDelay   = context.getInteger(CONTEXT_KEY_RETRY_DELAY, CONTEXT_DEFAULT_RETRY_DELAY);
         sslEnabled   = context.getBoolean(CONTEXT_KEY_SSL_ENABLED, CONTEXT_DEFAULT_SSL_ENABLED);
         keystoreType = context.getString(CONTEXT_KEY_KEYSTORE_TYPE, CONTEXT_DEFAULT_KEYSTORE_TYPE);

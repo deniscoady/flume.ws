@@ -31,6 +31,8 @@ import org.apache.flume.source.AbstractSource;
 import org.apache.log4j.Logger;
 import org.java_websocket.handshake.ServerHandshake;
 
+import javax.net.SocketFactory;
+import javax.net.ssl.SSLSocketFactory;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Map;
@@ -81,12 +83,7 @@ public class WebSocketSource extends AbstractSource implements Configurable, Eve
 
             if (configuration.isSecure()) {
                 logger.info("SSL Enabled, setting up SSLSocketFactory");
-                webSocket.setSocketFactory(new SSLSocketFactoryBuilder(
-                    configuration.getKeyStoreType(),
-                    configuration.getKeyStorePath(),
-                    configuration.getKeyStorePassword(),
-                    configuration.trustAllCertificates()
-                ).getSSLSocketFactory());
+                webSocket.setSocketFactory(getSocketFactory());
             }
         } catch (URISyntaxException e) {
             e.printStackTrace();
@@ -111,6 +108,25 @@ public class WebSocketSource extends AbstractSource implements Configurable, Eve
         closeConnection();
         sourceCounter.stop();
         super.stop();
+    }
+
+    /**
+     * Create SSLSocketFactory. If user presented a Java KeyStore then one is created with those trusted certificates.
+     *
+     * @return SSL socket factory
+     */
+    private SocketFactory getSocketFactory() {
+        SocketFactory factory = SSLSocketFactory.getDefault();
+        if (configuration.getKeyStoreType() != null
+        &&  configuration.getKeyStorePath() != null) {
+            factory = new SSLSocketFactoryBuilder(
+                    configuration.getKeyStoreType(),
+                    configuration.getKeyStorePath(),
+                    configuration.getKeyStorePassword(),
+                    configuration.trustAllCertificates()
+            ).getSSLSocketFactory();
+        }
+        return factory;
     }
 
     /**
