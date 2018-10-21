@@ -10,7 +10,7 @@ This library was built to provide the following features:
 * Automatically reconnects after a customizable delay.
 
 - [Configurable flume.conf Source Properties](#configurable-flumeconf-source-properties)
-    + [Configuration Additional Notes:](#configuration-additional-notes-)
+    + [Configuration Additional Notes](#configuration-additional-notes-)
 - [Examples](#examples)
   * [Connecting to Coinbase Websocket API](#connecting-to-coinbase-websocket-api)
 - [Building and Installing](#building-and-installing)
