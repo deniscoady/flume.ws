@@ -1,4 +1,4 @@
-<img align="center" src="logo.jpg" alt="Logo">
+<img align="center" src="image.jpg" alt="Logo">
 
 # Websocket Source for Apache Flume
 Apache Flume is a simple and effective framework for ingesting small messages in realtime which 
