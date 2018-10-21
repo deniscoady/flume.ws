@@ -57,8 +57,6 @@ a1.sources.w1.initMessage   = {"type": "subscribe", "product_ids": ["BTC-USD"], 
 a1.sources.w1.channels      = c1
 a1.sources.w1.sslEnabled    = true
 a1.sources.w1.trustAllCerts = true
-a1.sources.w1.keyStorePath  = conf/keystore.jks
-a1.sources.w1.keyStorePass  = changeit
 
 # SINKS
 a1.sinks.l1.type    = logger
