@@ -50,11 +50,11 @@ a1.channels.c1.capacity            = 1000
 a1.channels.c1.transactionCapacity = 100
 
 # SOURCES
-a1.sources.w1.type         = com.deniscoady.flume.websocket.WebSocketSource
-a1.sources.w1.endpoint     = wss://ws-feed.pro.coinbase.com
-a1.sources.w1.retryDelay   = 5
-a1.sources.w1.initMessage  = {"type": "subscribe", "product_ids": ["BTC-USD"], "channels": ["level2"]}
-a1.sources.w1.channels     = c1
+a1.sources.w1.type          = com.deniscoady.flume.websocket.WebSocketSource
+a1.sources.w1.endpoint      = wss://ws-feed.pro.coinbase.com
+a1.sources.w1.retryDelay    = 5
+a1.sources.w1.initMessage   = {"type": "subscribe", "product_ids": ["BTC-USD"], "channels": ["level2"]}
+a1.sources.w1.channels      = c1
 a1.sources.w1.sslEnabled    = true
 a1.sources.w1.trustAllCerts = true
 a1.sources.w1.keyStorePath  = conf/keystore.jks
