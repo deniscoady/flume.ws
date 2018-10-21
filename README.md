@@ -10,7 +10,7 @@ Hi there! I've mostly put this up to archive work which can possibly be reused b
 Apache Flume is a simple and effective framework for ingesting small messages in realtime which 
 makes a perfect receiver for websocket messages. Unfortunately I couldn't find a library that 
 does everything I wanted so I built this one myself. Hopefully it will help others in their 
-persuit of building cool things with less effort.
+pursuit to build cool things with less effort.
 
 This library was built to provide the following features:
 * Connects to plain text `ws://` or secure `wss://` endpoints
