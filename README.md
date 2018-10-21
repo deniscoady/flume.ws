@@ -1,6 +1,11 @@
 <img align="center" src="image.jpg" alt="Logo">
 
 # Websocket Source for Apache Flume
+
+## Author Note
+Hi there, so I've mostly put this up to archive work which can possibly be reused by others. If something is broken or you'd like to see a feature, feel free to leave an issue and I'll take a look.
+
+## Overview
 Apache Flume is a simple and effective framework for ingesting small messages in realtime which 
 makes a perfect receiver for websocket messages. Unfortunately I couldn't find a library that 
 does everything I wanted so I built this one myself. Hopefully it will help others in their 
