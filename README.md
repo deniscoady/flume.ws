@@ -1,4 +1,14 @@
 # Websocket Source for Apache Flume
+- [Websocket Source for Apache Flume](#websocket-source-for-apache-flume)
+  * [Background](#background)
+- [Configurable flume.conf Source Properties](#configurable-flumeconf-source-properties)
+    + [Configuration Additional Notes:](#configuration-additional-notes-)
+- [Examples](#examples)
+  * [Connecting to Coinbase Websocket API](#connecting-to-coinbase-websocket-api)
+- [Building and Installing](#building-and-installing)
+  * [Building the Project](#building-the-project)
+  * [Installing third-party libraries for Apache Flume](#installing-third-party-libraries-for-apache-flume)
+    + [Creating the custom plugin directory](#creating-the-custom-plugin-directory)
 
 ## Background
 Apache Flume is a simple and effective framework for ingesting small messages in realtime which 
