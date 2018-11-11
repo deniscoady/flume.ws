@@ -18,23 +18,18 @@
 package com.deniscoady.flume.websocket;
 
 import org.apache.flume.Context;
+
+import java.net.InetSocketAddress;
 import java.net.URI;
 import java.net.URISyntaxException;
 
 /**
  * Helper configuration class to parse valid properties from Flume Context
  */
-public class Configuration {
-    /**
-     * Endpoint (endpoint)
-     *
-     * Required: yes
-     * Default: null
-     *
-     * URL endpoint for websocket to establish connection.
-     * Example: ws://example.com or wss://example.com if CONTEXT_SSL_ENABLED is true
-     */
-    public final static String CONTEXT_KEY_ENDPOINT_URI  = "endpoint";
+public class SinkConfiguration {
+
+    public final static String CONTEXT_KEY_LISTENING_HOST  = "host";
+    public final static String CONTEXT_KEY_LISTENING_PORT  = "port";
 
     /**
      * Enable TLS Encryption (sslEnabled)
@@ -45,17 +40,6 @@ public class Configuration {
      * Configure if TLS/SSL encryption should be used on the socket.
      */
     public final static String CONTEXT_KEY_SSL_ENABLED   = "sslEnabled";
-
-    /**
-     * Retry Delay (retryDelay)
-     *
-     * Required: no
-     * Default : 30
-     *
-     * On an unexpected websocket closure, determine how quickly the client should poll
-     * attempting to reestablish connection. Duration is in seconds.
-     */
-    public final static String CONTEXT_KEY_RETRY_DELAY   = "retryDelay";
 
     /**
      * Trust All TLS Certificates (trustAllCerts)
@@ -100,48 +84,34 @@ public class Configuration {
     public final static String CONTEXT_KEY_KEYSTORE_PASS = "keyStorePass";
 
     /**
-     * Connection Initialization Message (initMessage)
-     *
-     * Required: no
-     * Default : null
-     *
-     * After a successful connection, the websocket client will send this message to the remote endpoint. Typically
-     * this is used for authentication or subscribing to a message channel.
-     */
-    public final static String CONTEXT_KEY_INIT_MESSAGE  = "initMessage";
-
-    /**
      * Default configuration values.
      *
      * CONTEXT_DEFAULT_* is the default value for the CONTEXT_KEY_* property.
      */
-    public final static String CONTEXT_DEFAULT_ENDPOINT_URI   = null;
-    public final static String CONTEXT_DEFAULT_INIT_MESSAGE   = null;
+    public final static String CONTEXT_DEFAULT_LISTENING_HOST = "0.0.0.0";
+    public final static Integer CONTEXT_DEFAULT_LISTENING_PORT = 8080;
     public final static boolean CONTEXT_DEFAULT_SSL_ENABLED   = false;
     public final static String CONTEXT_DEFAULT_KEYSTORE_TYPE  = null;
     public final static String CONTEXT_DEFAULT_KEYSTORE_PATH  = null;
     public final static String CONTEXT_DEFAULT_KEYSTORE_PASS  = null;
     public final static boolean CONTEXT_DEFAULT_KEYSTORE_OPEN = false;
-    public final static Integer CONTEXT_DEFAULT_RETRY_DELAY   = 30;
 
-    private final String  endpoint;
-    private final String  initMessage;
-    private final Integer retryDelay;
+    private final String  host;
+    private final Integer port;
     private final Boolean sslEnabled;
     private final String  keystoreType;
     private final String  keystorePath;
     private final String  keystorePass;
-    private final Boolean keystoreOpen;
+    private final boolean keystoreOpen;
 
     /**
      * Parse configuration settings from Flume context
      *
      * @param context Flume context
      */
-    public Configuration(Context context) {
-        endpoint     = context.getString(CONTEXT_KEY_ENDPOINT_URI, CONTEXT_DEFAULT_ENDPOINT_URI);
-        initMessage  = context.getString(CONTEXT_KEY_INIT_MESSAGE, CONTEXT_DEFAULT_INIT_MESSAGE);
-        retryDelay   = context.getInteger(CONTEXT_KEY_RETRY_DELAY, CONTEXT_DEFAULT_RETRY_DELAY);
+    public SinkConfiguration(Context context) {
+        host         = context.getString(CONTEXT_KEY_LISTENING_HOST, CONTEXT_DEFAULT_LISTENING_HOST);
+        port         = context.getInteger(CONTEXT_KEY_LISTENING_PORT, CONTEXT_DEFAULT_LISTENING_PORT);
         sslEnabled   = context.getBoolean(CONTEXT_KEY_SSL_ENABLED, CONTEXT_DEFAULT_SSL_ENABLED);
         keystoreType = context.getString(CONTEXT_KEY_KEYSTORE_TYPE, CONTEXT_DEFAULT_KEYSTORE_TYPE);
         keystorePath = context.getString(CONTEXT_KEY_KEYSTORE_PATH, CONTEXT_DEFAULT_KEYSTORE_PATH);
@@ -149,41 +119,8 @@ public class Configuration {
         keystoreOpen = context.getBoolean(CONTEXT_KEY_KEYSTORE_OPEN, CONTEXT_DEFAULT_KEYSTORE_OPEN);
     }
 
-    /**
-     * Get websocket server endpoint.
-     *
-     * @return address of websocket server endpoint
-     * @throws URISyntaxException if endpoint property is not set
-     */
-    public URI getEndpointAddress() throws URISyntaxException {
-        return new URI(endpoint);
-    }
-
-    /**
-     * Check to see if user provided a non-null initialization message.
-     *
-     * @return true if initialization message is defined
-     */
-    public Boolean hasInitializationMessage() {
-        return initMessage != null;
-    }
-
-    /**
-     * Get initialization message or null if none was configured
-     *
-     * @return initialization message or null if not configured
-     */
-    public String getInitializationMessage() {
-        return initMessage;
-    }
-
-    /**
-     * Get retry delay in seconds.
-     *
-     * @return retry delay in seconds
-     */
-    public Integer getRetryDelay() {
-        return retryDelay;
+    public InetSocketAddress getInetSocketAddress() {
+        return new InetSocketAddress(host, port);
     }
 
     /**

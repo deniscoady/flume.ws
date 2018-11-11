@@ -27,12 +27,12 @@ import java.io.IOException;
 import java.security.*;
 import java.security.cert.CertificateException;
 
-public class SSLSocketFactoryBuilder
+public class SSLBuilder
 {
-    private Logger logger = Logger.getLogger(SSLSocketFactoryBuilder.class);
+    private Logger logger = Logger.getLogger(SSLBuilder.class);
     private SSLContext sslContext;
 
-    public SSLSocketFactoryBuilder(
+    public SSLBuilder(
         String keyStoreType,
         String keyStorePath,
         String keyStorePassword,
@@ -98,14 +98,14 @@ public class SSLSocketFactoryBuilder
     }
 
     private SSLContext getSSLContext(KeyManagerFactory kmFactory, TrustManager[] trustManagers)
-        throws NoSuchAlgorithmException,
-               KeyManagementException {
-        SSLContext sslContext = null;
-        sslContext = SSLContext.getInstance("TLS");
-        sslContext.init(
-                kmFactory.getKeyManagers(),
-                trustManagers,
-                new java.security.SecureRandom());
+    throws NoSuchAlgorithmException,
+           KeyManagementException {
+        SSLContext sslContext = SSLContext.getInstance("TLS");
+        sslContext.init(kmFactory.getKeyManagers(), trustManagers, new SecureRandom());
+        return sslContext;
+    }
+
+    public SSLContext getSSLContext() {
         return sslContext;
     }
 

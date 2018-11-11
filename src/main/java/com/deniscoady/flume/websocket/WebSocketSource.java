@@ -17,7 +17,7 @@
 
 package com.deniscoady.flume.websocket;
 
-import com.deniscoady.flume.websocket.security.SSLSocketFactoryBuilder;
+import com.deniscoady.flume.websocket.security.SSLBuilder;
 import com.deniscoady.flume.websocket.util.Delay;
 import org.apache.flume.Context;
 import org.apache.flume.Event;
@@ -41,9 +41,9 @@ import java.util.TreeMap;
 public class WebSocketSource extends AbstractSource implements Configurable, EventDrivenSource {
 
     /**
-     * Configuration object holding Flume properties.
+     * SourceConfiguration object holding Flume properties.
      */
-    private Configuration configuration = null;
+    private SourceConfiguration sourceConfiguration = null;
 
     /**
      * SLF4j logger for debugging.
@@ -66,22 +66,22 @@ public class WebSocketSource extends AbstractSource implements Configurable, Eve
     private WebSocketClient connection = null;
 
     /**
-     * Parse Flume context for configuration properties and setup the websocket client factory.
+     * Parse Flume context for SourceConfiguration properties and setup the websocket client factory.
      *
      * @param context Flume context
      */
     @Override
     public void configure(Context context) {
-        configuration = new Configuration(context);
+        sourceConfiguration = new SourceConfiguration(context);
         try {
             webSocket = new WebSocketClient.Builder()
-                .setEndpoint(configuration.getEndpointAddress())
+                .setEndpoint(sourceConfiguration.getEndpointAddress())
                 .onOpen(this::onOpen)
                 .onMessage(this::onMessage)
                 .onClose(this::onClose)
                 .onError(ex -> logger.error(ex));
 
-            if (configuration.isSecure()) {
+            if (sourceConfiguration.isSecure()) {
                 logger.info("SSL Enabled, setting up SSLSocketFactory");
                 webSocket.setSocketFactory(getSocketFactory());
             }
@@ -117,13 +117,13 @@ public class WebSocketSource extends AbstractSource implements Configurable, Eve
      */
     private SocketFactory getSocketFactory() {
         SocketFactory factory = SSLSocketFactory.getDefault();
-        if (configuration.getKeyStoreType() != null
-        &&  configuration.getKeyStorePath() != null) {
-            factory = new SSLSocketFactoryBuilder(
-                    configuration.getKeyStoreType(),
-                    configuration.getKeyStorePath(),
-                    configuration.getKeyStorePassword(),
-                    configuration.trustAllCertificates()
+        if (sourceConfiguration.getKeyStoreType() != null
+        &&  sourceConfiguration.getKeyStorePath() != null) {
+            factory = new SSLBuilder(
+                    sourceConfiguration.getKeyStoreType(),
+                    sourceConfiguration.getKeyStorePath(),
+                    sourceConfiguration.getKeyStorePassword(),
+                    sourceConfiguration.trustAllCertificates()
             ).getSSLSocketFactory();
         }
         return factory;
@@ -197,8 +197,8 @@ public class WebSocketSource extends AbstractSource implements Configurable, Eve
      */
     private void onOpen(ServerHandshake serverHandshake) {
         logger.info("onOpen()");
-        if (isConnected() && configuration.hasInitializationMessage()) {
-            String message = configuration.getInitializationMessage();
+        if (isConnected() && sourceConfiguration.hasInitializationMessage()) {
+            String message = sourceConfiguration.getInitializationMessage();
             logger.info("Sending initialization message: \n" + message);
             connection.send(message);
         }
@@ -213,7 +213,7 @@ public class WebSocketSource extends AbstractSource implements Configurable, Eve
     private void onClose(Integer closeCode) {
         logger.info("Connection closed, code=" + closeCode);
         if (isRunning()) {
-            Delay.awaitCondition(configuration.getRetryDelay() * 1000, this::isRunning);
+            Delay.awaitCondition(sourceConfiguration.getRetryDelay() * 1000, this::isRunning);
             openConnection();
         }
     }
