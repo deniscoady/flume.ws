@@ -18,7 +18,7 @@
 package com.deniscoady.flume.websocket;
 
 import com.deniscoady.flume.websocket.security.SSLBuilder;
-import com.deniscoady.flume.websocket.util.Delay;
+import com.deniscoady.flume.websocket.util.TimerTaskAdapter;
 import org.apache.flume.Context;
 import org.apache.flume.Event;
 import org.apache.flume.EventDrivenSource;
@@ -36,6 +36,8 @@ import javax.net.ssl.SSLSocketFactory;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.TreeMap;
 
 public class WebSocketSource extends AbstractSource implements Configurable, EventDrivenSource {
@@ -66,6 +68,11 @@ public class WebSocketSource extends AbstractSource implements Configurable, Eve
     private WebSocketClient connection = null;
 
     /**
+     * Timer used to automatically reconnect on unexpected server socket closure.
+     */
+    private Timer timer = new Timer();
+
+    /**
      * Parse Flume context for SourceConfiguration properties and setup the websocket client factory.
      *
      * @param context Flume context
@@ -76,10 +83,17 @@ public class WebSocketSource extends AbstractSource implements Configurable, Eve
         try {
             webSocket = new WebSocketClient.Builder()
                 .setEndpoint(sourceConfiguration.getEndpointAddress())
+                .setHttpCookie(sourceConfiguration.getCookies())
                 .onOpen(this::onOpen)
                 .onMessage(this::onMessage)
                 .onClose(this::onClose)
                 .onError(ex -> logger.error(ex));
+
+            logger.info("Cookies:");
+            Map<String, String> cookies = sourceConfiguration.getCookies();
+            for (String key : cookies.keySet()) {
+                logger.info("  " + key + " = " + cookies.get(key));
+            }
 
             if (sourceConfiguration.isSecure()) {
                 logger.info("SSL Enabled, setting up SSLSocketFactory");
@@ -98,6 +112,9 @@ public class WebSocketSource extends AbstractSource implements Configurable, Eve
         sourceCounter.start();
         openConnection();
         super.start();
+        timer.schedule(
+                new TimerTaskAdapter(this::openConnection),
+                sourceConfiguration.getRetryDelay() * 1000);
     }
 
     /**
@@ -105,6 +122,7 @@ public class WebSocketSource extends AbstractSource implements Configurable, Eve
      */
     @Override
     public void stop() {
+        timer.cancel();
         closeConnection();
         sourceCounter.stop();
         super.stop();
@@ -212,10 +230,6 @@ public class WebSocketSource extends AbstractSource implements Configurable, Eve
      */
     private void onClose(Integer closeCode) {
         logger.info("Connection closed, code=" + closeCode);
-        if (isRunning()) {
-            Delay.awaitCondition(sourceConfiguration.getRetryDelay() * 1000, this::isRunning);
-            openConnection();
-        }
     }
 
     /**
@@ -225,7 +239,7 @@ public class WebSocketSource extends AbstractSource implements Configurable, Eve
      * @param message A string buffer containing a message sent from the remote endpoint
      */
     private void onMessage(String message) {
-        logger.info("Message(" + message + ")");
+        logger.debug("Message(" + message + ")");
         sourceCounter.incrementEventReceivedCount();
         ChannelProcessor processor = getChannelProcessor();
         processor.processEvent(createEvent(message));

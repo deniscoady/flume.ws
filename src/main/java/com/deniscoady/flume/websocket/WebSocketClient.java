@@ -23,6 +23,9 @@ import org.java_websocket.handshake.ServerHandshake;
 import javax.net.SocketFactory;
 import java.io.IOException;
 import java.net.URI;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 import java.util.function.Consumer;
 
 /**
@@ -32,7 +35,7 @@ public class WebSocketClient extends org.java_websocket.client.WebSocketClient {
     /**
      * SLF4j logger for debugging.
      */
-    private Logger logger = Logger.getLogger(WebSocketClient.class);
+    private static Logger logger = Logger.getLogger(WebSocketClient.class);
 
     /**
      * Asynchronous event handler triggered on a successful opening of a connection.
@@ -65,11 +68,12 @@ public class WebSocketClient extends org.java_websocket.client.WebSocketClient {
      */
     private WebSocketClient(
         URI serverUri,
+        Map<String ,String> httpHeaders,
         Consumer<ServerHandshake> openConsumer,
         Consumer<String> messageConsumer,
         Consumer<Integer> closeConsumer,
         Consumer<Exception> errorConsumer) {
-        super(serverUri);
+        super(serverUri, httpHeaders);
         this.openConsumer = openConsumer;
         this.messageConsumer = messageConsumer;
         this.closeConsumer = closeConsumer;
@@ -135,6 +139,11 @@ public class WebSocketClient extends org.java_websocket.client.WebSocketClient {
         private URI endpoint;
 
         /**
+         * HTTP Headers
+         */
+        private Map<String, String> httpHeaders = new HashMap<>();
+
+        /**
          * Asynchronous event handler triggered on a successful opening of a connection.
          */
         private Consumer<ServerHandshake> openConsumer;
@@ -161,6 +170,11 @@ public class WebSocketClient extends org.java_websocket.client.WebSocketClient {
         private SocketFactory socketFactory = SocketFactory.getDefault();
 
         /**
+         * Constant string field name for http cookies
+         */
+        private final String HTTP_HEADER_FIELD_COOKIE = "cookie";
+
+        /**
          * Set remote endpoint URI
          *
          * @param endpoint remote endpoint URI
@@ -168,6 +182,62 @@ public class WebSocketClient extends org.java_websocket.client.WebSocketClient {
          */
         public Builder setEndpoint(URI endpoint) {
             this.endpoint = endpoint;
+            return this;
+        }
+
+        /**
+         * Set an HTTP Header with initialization message
+         *
+         * @param name http header name
+         * @param value http header value
+         * @return this Builder object
+         */
+        public Builder setHttpHeader(String name, String value) {
+            this.httpHeaders.put(name, value);
+            return this;
+        }
+
+        /**
+         * Set multiple HTTP headers with initialization message
+         *
+         * @param headers
+         * @return
+         */
+        public Builder setHttpHeader(Map<String, String> headers) {
+            Set<String> keys = headers.keySet();
+            keys.forEach(key -> setHttpHeader(key, headers.get(key)));
+            return this;
+        }
+
+        /**
+         * Set a HTTP cookie with initialization message
+         *
+         * @param name of the http cookie
+         * @param value of the http cookie
+         * @return
+         */
+        public Builder setHttpCookie(String name, String value) {
+            String nextCookie = String.join("=", name, value);
+            String cookie = nextCookie;
+
+            if (this.httpHeaders.containsKey(HTTP_HEADER_FIELD_COOKIE)) {
+                cookie = this.httpHeaders.get(HTTP_HEADER_FIELD_COOKIE);
+                cookie = String.join(";", cookie, nextCookie);
+            }
+
+            this.httpHeaders.put(HTTP_HEADER_FIELD_COOKIE, cookie);
+            return this;
+        }
+
+        /**
+         * Set multiple HTTP cookies with initialization message
+         *
+         * @param cookies map of cookie names and values
+         * @return this Builder object
+         */
+        public Builder setHttpCookie(Map<String, String> cookies) {
+            Set<String> keys = cookies.keySet();
+            keys.forEach(key -> setHttpCookie(key, cookies.get(key)));
             return this;
         }
 
@@ -231,6 +301,7 @@ public class WebSocketClient extends org.java_websocket.client.WebSocketClient {
          */
         public WebSocketClient connect() throws IOException {
             WebSocketClient client = new WebSocketClient(this.endpoint,
+                this.httpHeaders,
                 this.openConsumer,
                 this.messageConsumer,
                 this.closeConsumer,

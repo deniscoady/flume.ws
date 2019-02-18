@@ -18,13 +18,24 @@
 package com.deniscoady.flume.websocket;
 
 import org.apache.flume.Context;
+import org.apache.log4j.Logger;
+
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Helper configuration class to parse valid properties from Flume Context
  */
 public class SourceConfiguration {
+
+    /**
+     * SLF4j logger for debugging.
+     */
+    private Logger logger = Logger.getLogger(SourceConfiguration.class);
+
     /**
      * Endpoint (endpoint)
      *
@@ -111,18 +122,59 @@ public class SourceConfiguration {
     public final static String CONTEXT_KEY_INIT_MESSAGE  = "initMessage";
 
     /**
+     * Comma-delimted list of HTTP cookie names to be passed to remote server
+     *
+     * Required: no
+     * Default : null
+     *
+     * After a successful connection, the websocket client will create each HTTP cookie and forward them with the
+     * initial message.
+     *
+     * Cookies are defined in the typical Flume convention of:
+     *
+     *  .cookies = cookie1,cookie2,...
+     *  .cookie.cookie1.name = Cookie 1 Name
+     *  .cookie.cookie1.data = Cookie 1 Data
+     *  .cookie.cookie2.name = Cookie 2 Name
+     *  .cookie.cookie2.data = Cookie 2 Data
+     */
+    public final static String CONTEXT_KEY_COOKIE_NAMES  = "cookies";
+
+    /**
+     * Array of key/value pairs containing an HTTP cookie each
+     *
+     * Required: no
+     * Default : null
+     *
+     * After a successful connection, the websocket client will create each HTTP cookie defined with name of key
+     *
+     * Cookies are defined in the typical Flume convention of:
+     *
+     *  .cookies = cookie1,cookie2,...
+     *  .cookie.cookie1.name = Cookie 1 Name
+     *  .cookie.cookie1.data = Cookie 1 Data
+     *  .cookie.cookie2.name = Cookie 2 Name
+     *  .cookie.cookie2.data = Cookie 2 Data
+     *
+     */
+    public final static String CONTEXT_KEY_COOKIE_ARRAY  = "cookie";
+
+    /**
      * Default configuration values.
      *
      * CONTEXT_DEFAULT_* is the default value for the CONTEXT_KEY_* property.
      */
-    public final static String CONTEXT_DEFAULT_ENDPOINT_URI   = null;
-    public final static String CONTEXT_DEFAULT_INIT_MESSAGE   = null;
+    public final static String  CONTEXT_DEFAULT_ENDPOINT_URI  = null;
+    public final static String  CONTEXT_DEFAULT_INIT_MESSAGE  = null;
     public final static boolean CONTEXT_DEFAULT_SSL_ENABLED   = false;
-    public final static String CONTEXT_DEFAULT_KEYSTORE_TYPE  = null;
-    public final static String CONTEXT_DEFAULT_KEYSTORE_PATH  = null;
-    public final static String CONTEXT_DEFAULT_KEYSTORE_PASS  = null;
+    public final static String  CONTEXT_DEFAULT_KEYSTORE_TYPE = null;
+    public final static String  CONTEXT_DEFAULT_KEYSTORE_PATH = null;
+    public final static String  CONTEXT_DEFAULT_KEYSTORE_PASS = null;
     public final static boolean CONTEXT_DEFAULT_KEYSTORE_OPEN = false;
     public final static Integer CONTEXT_DEFAULT_RETRY_DELAY   = 30;
+    public final static String  CONTEXT_DEFAULT_COOKIE_NAMES  = null;
+    public final static Map<String, String> CONTEXT_DEFAULT_COOKIE_ARRAY = new HashMap<>();
+
 
     private final String  endpoint;
     private final String  initMessage;
@@ -132,6 +184,8 @@ public class SourceConfiguration {
     private final String  keystorePath;
     private final String  keystorePass;
     private final Boolean keystoreOpen;
+    private final String  cookieNames;
+    private final Map<String, String> cookieArray;
 
     /**
      * Parse configuration settings from Flume context
@@ -147,6 +201,8 @@ public class SourceConfiguration {
         keystorePath = context.getString(CONTEXT_KEY_KEYSTORE_PATH, CONTEXT_DEFAULT_KEYSTORE_PATH);
         keystorePass = context.getString(CONTEXT_KEY_KEYSTORE_PASS, CONTEXT_DEFAULT_KEYSTORE_PASS);
         keystoreOpen = context.getBoolean(CONTEXT_KEY_KEYSTORE_OPEN, CONTEXT_DEFAULT_KEYSTORE_OPEN);
+        cookieNames  = context.getString(CONTEXT_KEY_COOKIE_NAMES, CONTEXT_DEFAULT_COOKIE_NAMES);
+        cookieArray  = context.getSubProperties(CONTEXT_KEY_COOKIE_ARRAY + ".");
     }
 
     /**
@@ -229,5 +285,24 @@ public class SourceConfiguration {
      */
     public Boolean trustAllCertificates() {
         return keystoreOpen;
+    }
+
+    /**
+     * Get HTTP cookies listed and defined
+     *
+     * @return a string map of cookie names and data
+     */
+    public Map<String, String> getCookies() {
+        Map<String, String> cookies = new HashMap<>();
+        if (cookieNames != CONTEXT_DEFAULT_COOKIE_NAMES) {
+            Arrays.stream(cookieNames.split("\\s*,\\s*"))
+                    .filter(id -> cookieArray.containsKey(id + ".name"))
+                    .filter(id -> cookieArray.containsKey(id + ".value"))
+                    .forEach(id -> cookies.put(
+                            cookieArray.get(id + ".name"),
+                            cookieArray.get(id + ".value")));
+        }
+
+        return cookies;
     }
 }
