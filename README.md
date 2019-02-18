@@ -33,7 +33,7 @@ This library was built to provide the following features:
 | cookie.*.value | no<sup>2</sup> | | string | The data of the cookie |
 
 * <sup>1</sup> sslEnabled must be set to true for `wss://` protocol usage.
-* <sup>2</sup> A `cookie.*` name/value will only be included if the subparameter key is listed in `cookies`.
+* <sup>2</sup> A `cookie.*` name/value will only be included if the subparameter key is listed in `cookies`. See [Using HTTP cookies](#using-http-cookies) below for an example.
 # Examples
 
 ## Get Single Echo Response from echo.websocket.org
