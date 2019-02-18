@@ -28,12 +28,12 @@ This library was built to provide the following features:
 | keyStorePath  | no      |  | string | Filesystem location of Java KeyStore |
 | keyStorePass  | no      |  | string | Password to open and read Java KeyStore |
 | initMessage | no |  | string | After a successful connection, the websocket client will send this message to the remote endpoint. Typically this is used for authentication or subscribing to a message channel. |
-| cookies | no | | strings | Comma-delimited list of keys in cookie array. The keys are not the cookie name, but just define the property key containing the name & value for the cookie. |
-| cookie.*.name | no | | string | The name of the cookie |
-| cookie.*.value | no | | string | The data of the cookie |
+| cookies | no<sup>2</sup> | | strings | Comma-delimited list of keys in cookie array. The keys are not the cookie name, but just define the property key containing the name & value for the cookie. |
+| cookie.*.name | no<sup>2</sup> | | string | The name of the cookie |
+| cookie.*.value | no<sup>2</sup> | | string | The data of the cookie |
 
-<sup>1</sup> sslEnabled must be set to true for `wss://` protocol usage.
-
+* <sup>1</sup> sslEnabled must be set to true for `wss://` protocol usage.
+* <sup>2</sup> A `cookie.*` name/value will only be included if the subparameter key is listed in `cookies`.
 # Examples
 
 ## Get Single Echo Response from echo.websocket.org
