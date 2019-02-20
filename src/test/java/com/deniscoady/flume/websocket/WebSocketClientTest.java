@@ -25,7 +25,7 @@ public class WebSocketClientTest {
 
     private final static int TIMEOUT = 10000; // milliseconds
 
-    private final static int SERVER_TCP_PORT = 50002;
+    private final static int SERVER_TCP_PORT = 50009;
 
     private final static WebSocketServer server = new WebSocketServer.Builder()
             // Bind to 0.0.0.0:55055
@@ -87,6 +87,7 @@ public class WebSocketClientTest {
                 .onOpen((ServerHandshake handshake) -> connected.countDown())
                 .onClose(code -> disconnected.countDown())
                 .onError(ex -> ex.printStackTrace())
+                .onMessage(message -> {})
                 .connect();
 
         connected.await(TIMEOUT, TimeUnit.MILLISECONDS);
@@ -106,6 +107,7 @@ public class WebSocketClientTest {
                 .setEndpoint(new URI("ws://localhost:" + SERVER_TCP_PORT))
                 .onOpen((ServerHandshake handshake) -> connected.countDown())
                 .onClose(code -> {})
+//                .onMessage(message -> {})
                 .onError(ex -> errored.countDown())
                 .connect();
 
@@ -130,6 +132,9 @@ public class WebSocketClientTest {
                 .setEndpoint(new URI("ws://localhost:" + SERVER_TCP_PORT))
                 .setHttpHeader(httpHeaders)
                 .onError(ex -> ex.printStackTrace())
+                .onOpen(handshake -> {})
+                .onClose(code -> {})
+                .onMessage(message -> {})
                 .connect();
 
         assertEquals(httpHeaders, client.getHttpHeaders());
@@ -146,6 +151,9 @@ public class WebSocketClientTest {
                 .setEndpoint(new URI("ws://localhost:" + SERVER_TCP_PORT))
                 .setHttpCookie(cookies)
                 .onError(ex -> ex.printStackTrace())
+                .onOpen(handshake -> {})
+                .onClose(code -> {})
+                .onMessage(message -> {})
                 .connect();
 
         String cookie = client.getHttpHeaders().get("cookie");
@@ -158,6 +166,9 @@ public class WebSocketClientTest {
                 .setEndpoint(new URI("ws://localhost:" + SERVER_TCP_PORT))
                 .setSocketFactory(SocketFactory.getDefault())
                 .onError(ex -> ex.printStackTrace())
+                .onOpen(handshake -> {})
+                .onClose(code -> {})
+                .onMessage(message -> {})
                 .connect();
     }
 }

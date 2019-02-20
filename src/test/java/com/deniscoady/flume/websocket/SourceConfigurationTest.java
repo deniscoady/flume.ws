@@ -85,7 +85,7 @@ public class SourceConfigurationTest {
 
     @Test
     public void getKeyStorePath() {
-        assertNull(configuration.getKeyStoreType());
+        assertNull(configuration.getKeyStorePath());
     }
 
     @Test
