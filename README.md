@@ -28,9 +28,12 @@ This library was built to provide the following features:
 | keyStorePath  | no      |  | string | Filesystem location of Java KeyStore |
 | keyStorePass  | no      |  | string | Password to open and read Java KeyStore |
 | initMessage | no |  | string | After a successful connection, the websocket client will send this message to the remote endpoint. Typically this is used for authentication or subscribing to a message channel. |
+| cookies | no<sup>2</sup> | | strings | Comma-delimited list of keys in cookie array. The keys are not the cookie name, but just define the property key containing the name & value for the cookie. |
+| cookie.*.name | no<sup>2</sup> | | string | The name of the cookie |
+| cookie.*.value | no<sup>2</sup> | | string | The data of the cookie |
 
-<sup>1</sup> sslEnabled must be set to true for `wss://` protocol usage.
-
+* <sup>1</sup> sslEnabled must be set to true for `wss://` protocol usage.
+* <sup>2</sup> A `cookie.*` name/value will only be included if the subparameter key is listed in `cookies`. See [Using HTTP cookies](#using-http-cookies) below for an example.
 # Examples
 
 ## Get Single Echo Response from echo.websocket.org
@@ -84,6 +87,20 @@ a1.sources.w1.trustAllCerts = true
 a1.sinks.l1.type    = logger
 a1.sinks.l1.channel = c1
 ```
+
+## Using HTTP cookies
+Cookies can be included in the session by adding them to the configuration file like so:
+```properties
+# ...
+a1.sources.w1.cookies              = cookie1,cookie2
+a1.sources.w1.cookie.cookie1.name  = some-cookie-name
+a1.sources.w1.cookie.cookie1.value = "Data for cookie1 goes here"
+a1.sources.w1.cookie.cookie2.name  = another-cookie-name
+a1.sources.w1.cookie.cookie2.value = "Data for cookie2 goes here"
+# ...
+```
+
+
 
 # Building and Installing
 
