@@ -36,14 +36,18 @@ public class WebSocketServer extends org.java_websocket.server.WebSocketServer {
 
     @Override
     public void onOpen(WebSocket webSocket, ClientHandshake clientHandshake) {
-        logger.info("Client joined: " + webSocket.getRemoteSocketAddress());
+        logger.debug("Client joined: " + webSocket.getRemoteSocketAddress());
     }
 
     @Override
-    public void onClose(WebSocket webSocket, int i, String s, boolean b) {}
+    public void onClose(WebSocket webSocket, int i, String s, boolean b) {
+        logger.debug("Client left: " + webSocket.getRemoteSocketAddress());
+    }
 
     @Override
-    public void onMessage(WebSocket webSocket, String s) {}
+    public void onMessage(WebSocket webSocket, String s) {
+        webSocket.send(s);
+    }
 
     @Override
     public void onError(WebSocket webSocket, Exception e) {
@@ -127,6 +131,4 @@ public class WebSocketServer extends org.java_websocket.server.WebSocketServer {
             return server;
         }
     }
-
-
 }

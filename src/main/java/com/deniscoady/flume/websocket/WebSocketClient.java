@@ -38,6 +38,11 @@ public class WebSocketClient extends org.java_websocket.client.WebSocketClient {
     private static Logger logger = Logger.getLogger(WebSocketClient.class);
 
     /**
+     * HTTP headers passed on connection
+     */
+    private Map<String, String> httpHeaders;
+
+    /**
      * Asynchronous event handler triggered on a successful opening of a connection.
      */
     private Consumer<ServerHandshake> openConsumer;
@@ -74,6 +79,7 @@ public class WebSocketClient extends org.java_websocket.client.WebSocketClient {
         Consumer<Integer> closeConsumer,
         Consumer<Exception> errorConsumer) {
         super(serverUri, httpHeaders);
+        this.httpHeaders = httpHeaders;
         this.openConsumer = openConsumer;
         this.messageConsumer = messageConsumer;
         this.closeConsumer = closeConsumer;
@@ -110,7 +116,7 @@ public class WebSocketClient extends org.java_websocket.client.WebSocketClient {
      */
     @Override
     public void onClose(int code, String reason, boolean remote) {
-        logger.info("code=" + code + ", reason=" + reason + ", remote=" + remote);
+        logger.debug("onClose: code=" + code + ", reason=" + reason + ", remote=" + remote);
         this.closeConsumer.accept(code);
     }
 
@@ -122,6 +128,10 @@ public class WebSocketClient extends org.java_websocket.client.WebSocketClient {
     @Override
     public void onError(Exception exception) {
         this.errorConsumer.accept(exception);
+    }
+
+    public Map<String, String> getHttpHeaders() {
+        return this.httpHeaders;
     }
 
     /**
