@@ -18,7 +18,6 @@
 package com.deniscoady.flume.websocket;
 
 import org.apache.flume.Context;
-import org.apache.log4j.Logger;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -30,12 +29,6 @@ import java.util.Map;
  * Helper configuration class to parse valid properties from Flume Context
  */
 public class SourceConfiguration {
-
-    /**
-     * SLF4j logger for debugging.
-     */
-    private Logger logger = Logger.getLogger(SourceConfiguration.class);
-
     /**
      * Endpoint (endpoint)
      *

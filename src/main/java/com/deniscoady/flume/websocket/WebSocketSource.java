@@ -87,12 +87,6 @@ public class WebSocketSource extends AbstractSource implements Configurable, Eve
                 .onClose(this::onClose)
                 .onError(ex -> logger.error(ex));
 
-            logger.info("Cookies:");
-            Map<String, String> cookies = sourceConfiguration.getCookies();
-            for (String key : cookies.keySet()) {
-                logger.info("  " + key + " = " + cookies.get(key));
-            }
-
             if (sourceConfiguration.isSecure()) {
                 logger.info("SSL Enabled, setting up SSLSocketFactory");
                 webSocket.setSocketFactory(getSocketFactory());

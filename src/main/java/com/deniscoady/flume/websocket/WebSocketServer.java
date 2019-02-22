@@ -125,10 +125,10 @@ public class WebSocketServer extends org.java_websocket.server.WebSocketServer {
          * @return connected websocket client
          */
         public WebSocketServer listen() {
-            WebSocketServer server = new WebSocketServer(this.address, this.errorConsumer);
-            server.setWebSocketFactory(this.socketFactory);
-            server.start();
-            return server;
+            WebSocketServer instance = new WebSocketServer(this.address, this.errorConsumer);
+            instance.setWebSocketFactory(this.socketFactory);
+            instance.start();
+            return instance;
         }
     }
 }
