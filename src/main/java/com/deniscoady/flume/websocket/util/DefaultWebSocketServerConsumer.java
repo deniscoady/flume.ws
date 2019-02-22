@@ -24,9 +24,41 @@ package com.deniscoady.flume.websocket.util;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 
+/**
+ * A placeholder implementation for events which the instance does not need to
+ * react to.
+ */
 public class DefaultWebSocketServerConsumer {
-    public static void onOpen(WebSocket webSocket, ClientHandshake clientHandshake) {}
-    public static void onClose(WebSocket webSocket, Integer code) {}
-    public static void onMessage(WebSocket webSocket, String message) {}
-    public static void onError(WebSocket webSocket, Exception ex) {}
+
+    public static void onOpen(WebSocket webSocket, ClientHandshake clientHandshake) {
+        /**
+         * This method is empty to act as a "do nothing" operation in cases where
+         * the end usage of the WebSocket server does not require notification of
+         * an "open" event.
+         */
+    }
+
+    public static void onClose(WebSocket webSocket, Integer code) {
+        /**
+         * This method is empty to act as a "do nothing" operation in cases where
+         * the end usage of the WebSocket server does not require notification of
+         * an "close" event.
+         */
+    }
+
+    public static void onMessage(WebSocket webSocket, String message) {
+        /**
+         * This method is empty to act as a "do nothing" operation in cases where
+         * the end usage of the WebSocket server does not require notification of
+         * an "message" event.
+         */
+    }
+
+    public static void onError(WebSocket webSocket, Exception ex) {
+        /**
+         * This method is empty to act as a "do nothing" operation in cases where
+         * the end usage of the WebSocket server does not require notification of
+         * an "error" event.
+         */
+    }
 }
