@@ -8,6 +8,8 @@ before_script:
   - ./cc-test-reporter before-build
 after_script:
   - cp target/site/jacoco/jacoco.xml .
-  - ./cc-test-reporter after-build -t jacoco --exit-code $TRAVIS_TEST_RESULT
+  - cd src/java/main
+  - ../../../cc-test-reporter after-build -t jacoco --exit-code $TRAVIS_TEST_RESULT
+  - cd ../../..
 after_success:
   - bash <(curl -s https://codecov.io/bash)
