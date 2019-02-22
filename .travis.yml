@@ -8,7 +8,7 @@ before_script:
   - ./cc-test-reporter before-build
 after_script:
   - cp target/site/jacoco/jacoco.xml .
-  - cd src/java/main
+  - cd src/main/java
   - ../../../cc-test-reporter after-build -t jacoco --exit-code $TRAVIS_TEST_RESULT
   - cd ../../..
 after_success:
