@@ -19,6 +19,7 @@ package com.deniscoady.flume.websocket;
 
 import org.apache.flume.Context;
 
+import javax.print.URIException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Arrays;
@@ -205,6 +206,7 @@ public class SourceConfiguration {
      * @throws URISyntaxException if endpoint property is not set
      */
     public URI getEndpointAddress() throws URISyntaxException {
+        if (endpoint == null) throw new URISyntaxException("", "Endpoint address was not set and resolved to null.");
         return new URI(endpoint);
     }
 

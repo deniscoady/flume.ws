@@ -31,6 +31,7 @@ public class WebSocketServer extends org.java_websocket.server.WebSocketServer {
             InetSocketAddress address,
             BiConsumer<WebSocket, Exception> errorConsumer) {
         super(address);
+        this.setReuseAddr(true);
         this.errorConsumer = errorConsumer;
     }
 
@@ -46,6 +47,7 @@ public class WebSocketServer extends org.java_websocket.server.WebSocketServer {
 
     @Override
     public void onMessage(WebSocket webSocket, String s) {
+        logger.info("msg recv: " + s);
         webSocket.send(s);
     }
 
@@ -66,11 +68,6 @@ public class WebSocketServer extends org.java_websocket.server.WebSocketServer {
      */
     public static class Builder {
         /**
-         * Client under construction by the builder
-         */
-        private WebSocketServer server;
-
-        /**
          * Endpoint address for client to establish connection
          */
         private InetSocketAddress address;
@@ -85,6 +82,9 @@ public class WebSocketServer extends org.java_websocket.server.WebSocketServer {
          * TLS encryption.
          */
         private WebSocketServerFactory socketFactory = new DefaultWebSocketServerFactory();
+
+        public Builder() {
+        }
 
         /**
          * Set remote endpoint URI

@@ -173,17 +173,13 @@ public class WebSocketSource extends AbstractSource implements Configurable, Eve
      */
     private void openConnection() {
         if (isRunning() && !isConnected()) {
-            try {
-                logger.info("Opening connection");
-                connection = webSocket.connect();
-                connection.setReuseAddr(true);
-                connection.setTcpNoDelay(true);
-                connection.setConnectionLostTimeout(10);
-                sourceCounter.setOpenConnectionCount(1);
-                logger.info("Connection opened");
-            } catch (IOException ex) {
-                logger.error(ex);
-            }
+            logger.info("Opening connection");
+            connection = webSocket.connect();
+            connection.setReuseAddr(true);
+            connection.setTcpNoDelay(true);
+            connection.setConnectionLostTimeout(10);
+            sourceCounter.setOpenConnectionCount(1);
+            logger.info("Connection opened");
         }
     }
 
@@ -205,8 +201,7 @@ public class WebSocketSource extends AbstractSource implements Configurable, Eve
      *
      */
     private void onOpen() {
-        logger.info("onOpen()");
-        if (isConnected() && sourceConfiguration.hasInitializationMessage()) {
+        if (sourceConfiguration.hasInitializationMessage()) {
             String message = sourceConfiguration.getInitializationMessage();
             logger.info("Sending initialization message: \n" + message);
             connection.send(message);
@@ -220,7 +215,7 @@ public class WebSocketSource extends AbstractSource implements Configurable, Eve
      * @param closeCode interger status code defining why the connection was closed
      */
     private void onClose(Integer closeCode) {
-        logger.info("Connection closed, code=" + closeCode);
+        logger.debug("Connection closed, code=" + closeCode);
     }
 
     /**

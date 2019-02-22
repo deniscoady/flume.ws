@@ -1,23 +1,25 @@
 package com.deniscoady.flume.websocket;
 
 import org.apache.log4j.Logger;
-import org.java_websocket.WebSocket;
-import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.handshake.ServerHandshake;
-import org.junit.*;
-import org.junit.runners.MethodSorters;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 import javax.net.SocketFactory;
 import java.io.IOException;
-import java.net.*;
-import java.sql.Time;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class WebSocketClientTest {
 
@@ -27,16 +29,21 @@ public class WebSocketClientTest {
 
     private final static int SERVER_TCP_PORT = 50009;
 
-    private final static WebSocketServer server = new WebSocketServer.Builder()
-            // Bind to 0.0.0.0:55055
-            .setBindAddress(new InetSocketAddress(
-                    InetAddress.getLoopbackAddress(),
-                    SERVER_TCP_PORT))
-            .listen();
+    private WebSocketServer server;
 
-    @AfterClass
-    public static void cleanUp() throws InterruptedException {
-        server.stop(5);
+    @Before
+    public void setUp() {
+        server = new WebSocketServer.Builder()
+                // Bind to 0.0.0.0:55055
+                .setBindAddress(new InetSocketAddress(
+                        InetAddress.getLoopbackAddress(),
+                        SERVER_TCP_PORT))
+                .listen();
+    }
+
+    @After
+    public void cleanUp() throws InterruptedException, IOException {
+        server.stop();
     }
 
     @Test

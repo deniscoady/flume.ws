@@ -302,17 +302,21 @@ public class WebSocketClient extends org.java_websocket.client.WebSocketClient {
          * Return built and connected websocket client
          *
          * @return connected websocket client
-         * @throws IOException if socket could not be created
          */
-        public WebSocketClient connect() throws IOException {
-            WebSocketClient instance = new WebSocketClient(this.endpoint,
-                this.httpHeaders,
-                this.openConsumer,
-                this.messageConsumer,
-                this.closeConsumer,
-                this.errorConsumer);
-            instance.setSocket(this.socketFactory.createSocket());
-            instance.connect();
+        public WebSocketClient connect() {
+            WebSocketClient instance = null;
+            try {
+                instance = new WebSocketClient(this.endpoint,
+                        this.httpHeaders,
+                        this.openConsumer,
+                        this.messageConsumer,
+                        this.closeConsumer,
+                        this.errorConsumer);
+                instance.setSocket(this.socketFactory.createSocket());
+                instance.connect();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             return instance;
         }
     }
