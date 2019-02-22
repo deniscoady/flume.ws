@@ -28,15 +28,9 @@ import org.java_websocket.handshake.ClientHandshake;
  * A placeholder implementation for events which the instance does not need to
  * react to.
  */
-public class DefaultWebSocketServerConsumer {
+public interface DefaultWebSocketServerConsumer {
 
-    private DefaultWebSocketServerConsumer() {
-        /**
-         * Should not be allocated. All static methods should be called directly instead.
-         */
-    }
-
-    public static void onOpen(WebSocket webSocket, ClientHandshake clientHandshake) {
+    static void onOpen(WebSocket webSocket, ClientHandshake clientHandshake) {
         /**
          * This method is empty to act as a "do nothing" operation in cases where
          * the end usage of the WebSocket server does not require notification of
@@ -44,7 +38,7 @@ public class DefaultWebSocketServerConsumer {
          */
     }
 
-    public static void onClose(WebSocket webSocket, Integer code) {
+    static void onClose(WebSocket webSocket, Integer code) {
         /**
          * This method is empty to act as a "do nothing" operation in cases where
          * the end usage of the WebSocket server does not require notification of
@@ -52,7 +46,7 @@ public class DefaultWebSocketServerConsumer {
          */
     }
 
-    public static void onMessage(WebSocket webSocket, String message) {
+    static void onMessage(WebSocket webSocket, String message) {
         /**
          * This method is empty to act as a "do nothing" operation in cases where
          * the end usage of the WebSocket server does not require notification of
@@ -60,7 +54,7 @@ public class DefaultWebSocketServerConsumer {
          */
     }
 
-    public static void onError(WebSocket webSocket, Exception ex) {
+    static void onError(WebSocket webSocket, Exception ex) {
         /**
          * This method is empty to act as a "do nothing" operation in cases where
          * the end usage of the WebSocket server does not require notification of
