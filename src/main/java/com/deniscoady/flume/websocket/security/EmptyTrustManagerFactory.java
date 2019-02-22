@@ -23,15 +23,28 @@ import javax.net.ssl.ManagerFactoryParameters;
 import javax.net.ssl.TrustManager;
 import java.security.KeyStore;
 
+/**
+ * Class used to create a trust manager factory which creates sockets trusting ALL certificates.
+ *
+ * This should not be used in production.
+ */
 public final class EmptyTrustManagerFactory extends SimpleTrustManagerFactory {
 
     private final TrustManager tm = new EmptyTrustManager();
 
     @Override
-    protected void engineInit(KeyStore keyStore) throws Exception { }
+    protected void engineInit(KeyStore keyStore) throws Exception {
+        /**
+         * Does not require implementation.
+         */
+    }
 
     @Override
-    protected void engineInit(ManagerFactoryParameters managerFactoryParameters) throws Exception { }
+    protected void engineInit(ManagerFactoryParameters managerFactoryParameters) throws Exception {
+        /**
+         * Does not require implementation.
+         */
+    }
 
     @Override
     protected TrustManager[] engineGetTrustManagers() {
