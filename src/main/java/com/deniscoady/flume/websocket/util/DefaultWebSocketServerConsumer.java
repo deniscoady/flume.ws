@@ -30,6 +30,12 @@ import org.java_websocket.handshake.ClientHandshake;
  */
 public class DefaultWebSocketServerConsumer {
 
+    private DefaultWebSocketServerConsumer() {
+        /**
+         * Should not be allocated. All static methods should be called directly instead.
+         */
+    }
+
     public static void onOpen(WebSocket webSocket, ClientHandshake clientHandshake) {
         /**
          * This method is empty to act as a "do nothing" operation in cases where

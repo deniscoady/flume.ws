@@ -29,7 +29,6 @@ import org.apache.flume.instrumentation.SourceCounter;
 import org.apache.flume.lifecycle.LifecycleState;
 import org.apache.flume.source.AbstractSource;
 import org.apache.log4j.Logger;
-import org.java_websocket.handshake.ServerHandshake;
 
 import javax.net.SocketFactory;
 import javax.net.ssl.SSLSocketFactory;
@@ -37,7 +36,6 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Map;
 import java.util.Timer;
-import java.util.TimerTask;
 import java.util.TreeMap;
 
 public class WebSocketSource extends AbstractSource implements Configurable, EventDrivenSource {
@@ -84,7 +82,7 @@ public class WebSocketSource extends AbstractSource implements Configurable, Eve
             webSocket = new WebSocketClient.Builder()
                 .setEndpoint(sourceConfiguration.getEndpointAddress())
                 .setHttpCookie(sourceConfiguration.getCookies())
-                .onOpen(this::onOpen)
+                .onOpen(serverHandshake -> onOpen())
                 .onMessage(this::onMessage)
                 .onClose(this::onClose)
                 .onError(ex -> logger.error(ex));
@@ -211,9 +209,8 @@ public class WebSocketSource extends AbstractSource implements Configurable, Eve
      * Asynchronous event handler triggered when the websocket client successfully opens a connection. Sends the
      * initialization message if defined.
      *
-     * @param serverHandshake The websocket server http status response
      */
-    private void onOpen(ServerHandshake serverHandshake) {
+    private void onOpen() {
         logger.info("onOpen()");
         if (isConnected() && sourceConfiguration.hasInitializationMessage()) {
             String message = sourceConfiguration.getInitializationMessage();

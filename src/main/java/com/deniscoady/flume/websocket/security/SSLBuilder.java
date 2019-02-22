@@ -100,9 +100,9 @@ public class SSLBuilder
     private SSLContext getSSLContext(KeyManagerFactory kmFactory, TrustManager[] trustManagers)
     throws NoSuchAlgorithmException,
            KeyManagementException {
-        SSLContext sslContext = SSLContext.getInstance("TLS");
-        sslContext.init(kmFactory.getKeyManagers(), trustManagers, new SecureRandom());
-        return sslContext;
+        SSLContext context = SSLContext.getInstance("TLS");
+        context.init(kmFactory.getKeyManagers(), trustManagers, new SecureRandom());
+        return context;
     }
 
     public SSLContext getSSLContext() {

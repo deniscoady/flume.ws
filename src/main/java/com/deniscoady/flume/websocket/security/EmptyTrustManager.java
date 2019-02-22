@@ -23,10 +23,18 @@ import java.security.cert.X509Certificate;
 
 public class EmptyTrustManager implements X509TrustManager {
     @Override
-    public void checkClientTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {}
+    public void checkClientTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {
+        /**
+         * Does not require implementation.
+         */
+    }
 
     @Override
-    public void checkServerTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {}
+    public void checkServerTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {
+        /**
+         * Does not require implementation.
+         */
+    }
 
     @Override
     public X509Certificate[] getAcceptedIssuers() {

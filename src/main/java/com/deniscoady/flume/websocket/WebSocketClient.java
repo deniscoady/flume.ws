@@ -139,11 +139,6 @@ public class WebSocketClient extends org.java_websocket.client.WebSocketClient {
      */
     public static class Builder {
         /**
-         * Client under construction by the builder
-         */
-        private WebSocketClient client;
-
-        /**
          * Endpoint address for client to establish connection
          */
         private URI endpoint;
@@ -310,15 +305,15 @@ public class WebSocketClient extends org.java_websocket.client.WebSocketClient {
          * @throws IOException if socket could not be created
          */
         public WebSocketClient connect() throws IOException {
-            WebSocketClient client = new WebSocketClient(this.endpoint,
+            WebSocketClient instance = new WebSocketClient(this.endpoint,
                 this.httpHeaders,
                 this.openConsumer,
                 this.messageConsumer,
                 this.closeConsumer,
                 this.errorConsumer);
-            client.setSocket(this.socketFactory.createSocket());
-            client.connect();
-            return client;
+            instance.setSocket(this.socketFactory.createSocket());
+            instance.connect();
+            return instance;
         }
     }
 }
