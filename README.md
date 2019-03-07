@@ -2,6 +2,7 @@
 [![Build Status](https://travis-ci.org/dcoded/flume.ws.svg?branch=master)](https://travis-ci.org/dcoded/flume.ws)
 [![Known Vulnerabilities](https://snyk.io/test/github/dcoded/flume.ws/badge.svg)](https://snyk.io/test/github/dcoded/flume.ws)
 
+
 <img align="center" src="image.jpg" alt="Logo">
 
 ## Author Note
