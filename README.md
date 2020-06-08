@@ -2,7 +2,6 @@
 [![Build Status](https://travis-ci.org/dcoded/flume.ws.svg?branch=master)](https://travis-ci.org/dcoded/flume.ws)
 
 
-
 <img align="center" src="image.jpg" alt="Logo">
 
 ## Author Note
