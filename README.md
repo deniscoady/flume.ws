@@ -1,5 +1,5 @@
 # Websocket Source for Apache Flume
-[![dcoded](https://circleci.com/gh/dcoded/flume.ws.svg?style=svg)](<LINK>)
+[![dcoded](https://circleci.com/gh/dcoded/flume.ws/tree/master.svg?style=svg)](https://circleci.com/gh/dcoded/flume.ws/tree/master)
 [![codecov](https://codecov.io/gh/dcoded/flume.ws/branch/master/graph/badge.svg?token=o0ge98Ghku)](https://codecov.io/gh/dcoded/flume.ws)
 
 
