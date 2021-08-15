@@ -1,5 +1,6 @@
 # Websocket Source for Apache Flume
-[![Build Status](https://travis-ci.org/dcoded/flume.ws.svg?branch=master)](https://travis-ci.org/dcoded/flume.ws)
+[![dcoded](https://circleci.com/gh/dcoded/flume.ws.svg?style=svg)](<LINK>)
+[![codecov](https://codecov.io/gh/dcoded/flume.ws/branch/master/graph/badge.svg?token=o0ge98Ghku)](https://codecov.io/gh/dcoded/flume.ws)
 
 
 <img align="center" src="image.jpg" alt="Logo">
