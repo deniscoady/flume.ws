@@ -20,22 +20,6 @@ public class SourceConfigurationTest {
     private final static String TRUE  = "true";
     private final static String FALSE = "false";
 
-//    @Before
-//    public void setUp() throws Exception {
-//        Map<String, String> parameters = new HashMap<>();
-//        parameters.put("endpoint", ENDPOINT);
-//        parameters.put("retryDelay", RETRY_DELAY.toString());
-//        parameters.put("initMessage", INIT_MESSAGE);
-//        parameters.put("sslEnabled", IS_SECURE.toString());
-//        parameters.put("trustAllCerts", TRUST_ALL_CERTS.toString());
-//        parameters.put("cookies", "cookie1, cookie2");
-//        parameters.put("cookie.cookie1.name", "some-cookie-name");
-//        parameters.put("cookie.cookie1.value", "Data for cookie1 goes here");
-//        parameters.put("cookie.cookie2.name", "another-cookie-name");
-//        parameters.put("cookie.cookie2.value", "Data for cookie2 goes here");
-//        configuration = new SourceConfiguration(new Context(parameters));
-//    }
-
     @Test
     public void getEndpointAddress() throws URISyntaxException {
         Map<String, String> parameters = new HashMap<>();

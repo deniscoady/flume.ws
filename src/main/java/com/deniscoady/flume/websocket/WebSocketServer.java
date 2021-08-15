@@ -1,12 +1,16 @@
 package com.deniscoady.flume.websocket;
 
 import com.deniscoady.flume.websocket.util.DefaultWebSocketServerConsumer;
+import com.deniscoady.flume.websocket.util.WebSocketServerConsumer;
 import org.apache.log4j.Logger;
 import org.java_websocket.WebSocket;
+import org.java_websocket.WebSocketFactory;
 import org.java_websocket.WebSocketServerFactory;
 import org.java_websocket.handshake.ClientHandshake;
+import org.java_websocket.server.DefaultSSLWebSocketServerFactory;
 import org.java_websocket.server.DefaultWebSocketServerFactory;
 
+import javax.net.SocketFactory;
 import java.net.InetSocketAddress;
 import java.util.function.BiConsumer;
 
@@ -72,10 +76,16 @@ public class WebSocketServer extends org.java_websocket.server.WebSocketServer {
          */
         private InetSocketAddress address;
 
+
+        /**
+         * Default interface for WebSocketServerConsumer
+         */
+        private DefaultWebSocketServerConsumer defaultConsumer = new DefaultWebSocketServerConsumer();
+
         /**
          * Asynchronous event handler triggered on a client error.
          */
-        private BiConsumer<WebSocket, Exception> errorConsumer = DefaultWebSocketServerConsumer::onError;
+        private BiConsumer<WebSocket, Exception> errorConsumer = defaultConsumer::onError;
 
         /**
          * Socket factory to be used by websockets. Important to allow for custom socket factories when dealing with
@@ -83,8 +93,7 @@ public class WebSocketServer extends org.java_websocket.server.WebSocketServer {
          */
         private WebSocketServerFactory socketFactory = new DefaultWebSocketServerFactory();
 
-        public Builder() {
-        }
+        public Builder() {}
 
         /**
          * Set remote endpoint URI
