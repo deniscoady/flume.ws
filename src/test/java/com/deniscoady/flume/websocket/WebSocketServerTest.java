@@ -1,7 +1,8 @@
 package com.deniscoady.flume.websocket;
 
 import com.deniscoady.flume.websocket.security.SSLBuilder;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.java_websocket.WebSocket;
 import org.java_websocket.WebSocketServerFactory;
 import org.java_websocket.server.DefaultSSLWebSocketServerFactory;
@@ -17,11 +18,10 @@ import java.net.URL;
 import java.util.concurrent.CountDownLatch;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 public class WebSocketServerTest {
 
-    private final static Logger logger = Logger.getLogger(WebSocketClientTest.class);
+    private final static Logger logger = LogManager.getLogger(WebSocketClientTest.class);
 
     private final static int TIMEOUT = 2000; // milliseconds
 

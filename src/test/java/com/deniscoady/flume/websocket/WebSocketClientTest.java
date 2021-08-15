@@ -1,6 +1,7 @@
 package com.deniscoady.flume.websocket;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.java_websocket.handshake.ServerHandshake;
 import org.junit.After;
 import org.junit.Before;
@@ -23,7 +24,7 @@ import static org.junit.Assert.assertTrue;
 
 public class WebSocketClientTest {
 
-    private final static Logger logger = Logger.getLogger(WebSocketClientTest.class);
+    private final static Logger logger = LogManager.getLogger(WebSocketClientTest.class);
 
     private final static int TIMEOUT = 10000; // milliseconds
 

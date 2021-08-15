@@ -1,16 +1,13 @@
 package com.deniscoady.flume.websocket;
 
 import com.deniscoady.flume.websocket.util.DefaultWebSocketServerConsumer;
-import com.deniscoady.flume.websocket.util.WebSocketServerConsumer;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.java_websocket.WebSocket;
-import org.java_websocket.WebSocketFactory;
 import org.java_websocket.WebSocketServerFactory;
 import org.java_websocket.handshake.ClientHandshake;
-import org.java_websocket.server.DefaultSSLWebSocketServerFactory;
 import org.java_websocket.server.DefaultWebSocketServerFactory;
 
-import javax.net.SocketFactory;
 import java.net.InetSocketAddress;
 import java.util.function.BiConsumer;
 
@@ -18,7 +15,7 @@ public class WebSocketServer extends org.java_websocket.server.WebSocketServer {
     /**
      * SLF4j logger for debugging.
      */
-    private Logger logger = Logger.getLogger(WebSocketServer.class);
+    private Logger logger = LogManager.getLogger(WebSocketServer.class);
 
     /**
      * Asynchronous event handler triggered on a client error.

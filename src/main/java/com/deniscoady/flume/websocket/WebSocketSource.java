@@ -28,11 +28,11 @@ import org.apache.flume.event.SimpleEvent;
 import org.apache.flume.instrumentation.SourceCounter;
 import org.apache.flume.lifecycle.LifecycleState;
 import org.apache.flume.source.AbstractSource;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.net.SocketFactory;
 import javax.net.ssl.SSLSocketFactory;
-import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Map;
 import java.util.Timer;
@@ -48,7 +48,7 @@ public class WebSocketSource extends AbstractSource implements Configurable, Eve
     /**
      * SLF4j logger for debugging.
      */
-    private Logger logger = Logger.getLogger(WebSocketSource.class);
+    private Logger logger = LogManager.getLogger(WebSocketSource.class);
 
     /**
      * Source counter to report inputs and outputs over JMX by Apache Flume. Helps to identify pipeline issues.

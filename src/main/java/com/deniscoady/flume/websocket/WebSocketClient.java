@@ -17,9 +17,9 @@
 
 package com.deniscoady.flume.websocket;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.java_websocket.handshake.ServerHandshake;
-
 import javax.net.SocketFactory;
 import java.io.IOException;
 import java.net.URI;
@@ -35,7 +35,7 @@ public class WebSocketClient extends org.java_websocket.client.WebSocketClient {
     /**
      * SLF4j logger for debugging.
      */
-    private static Logger logger = Logger.getLogger(WebSocketClient.class);
+    private static Logger logger = LogManager.getLogger(WebSocketClient.class);
 
     /**
      * HTTP headers passed on connection

@@ -17,7 +17,8 @@
 
 package com.deniscoady.flume.websocket.security;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.net.ssl.*;
 import javax.net.ssl.TrustManagerFactory;
@@ -29,7 +30,7 @@ import java.security.cert.CertificateException;
 
 public class SSLBuilder
 {
-    private Logger logger = Logger.getLogger(SSLBuilder.class);
+    private Logger logger = LogManager.getLogger(SSLBuilder.class);
     private SSLContext sslContext;
 
     public SSLBuilder(
