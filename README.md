@@ -1,7 +1,7 @@
 # Websocket Source for Apache Flume
 [![dcoded](https://circleci.com/gh/dcoded/flume.ws/tree/master.svg?style=svg)](https://circleci.com/gh/dcoded/flume.ws/tree/master)
 [![codecov](https://codecov.io/gh/dcoded/flume.ws/branch/master/graph/badge.svg?token=o0ge98Ghku)](https://codecov.io/gh/dcoded/flume.ws)
-
+[![snyk.io](https://img.shields.io/snyk/vulnerabilities/github/dcoded/flume.ws)](https://app.snyk.io/org/dcoded/project/64d3f268-8c33-4a73-bae8-effb6458de7f)
 
 <img align="center" src="image.jpg" alt="Logo">
 
